@@ -1,0 +1,27 @@
+@import 'variables';
+
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.1rem 0;
+}
+
+.nav-item h1 {
+  font-size: 2.5rem;
+  font-weight: 400;
+  padding: 1rem 0;
+}
+
+.nav-link {
+  color: lighten($primary-color, 50%);
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: lighten($primary-color, 15%);
+  text-decoration: none;
+}
+
+
