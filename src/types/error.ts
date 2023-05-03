@@ -1,4 +1,4 @@
 export type ResponseError = {
-    status: number;
-    message: string;
+  status: number;
+  message: string;
 };

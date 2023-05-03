@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/Sidebar';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, expect } from 'vitest';
 

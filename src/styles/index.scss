@@ -1,8 +1,6 @@
-
 @import 'variables';
 @import 'reset';
-@import "common";
-
+@import 'common';
 
 body {
   font-family: 'Noto Sans', sans-serif;
@@ -29,7 +27,6 @@ body {
 .spinner {
   animation: rotate 1s linear infinite;
 }
-
 
 @media (prefers-color-scheme: dark) {
   body {

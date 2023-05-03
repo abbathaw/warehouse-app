@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
     "preview": "vite preview",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "prettier": "prettier --write .",
+    "coverage": "vitest run --coverage",
+    "test-ci": "vitest --maxWorkers=1 --watchAll=false",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
@@ -37,6 +40,7 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "husky": "^8.0.3",
     "jsdom": "^21.1.1",
     "prettier": "^2.8.8",
     "sass": "^1.62.0",

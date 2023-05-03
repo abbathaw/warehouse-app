@@ -1,0 +1,12 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+
+COMMIT_EDITMSG=$1
+COMMIT_REGEX='(((WARE)-[0-9a-zA-Z\-]+|chore|bugfix|misc|feat):\s.{10,}|Merge|(bump\sversion))'
+ERROR_MSG="Aborting commit.\nYour commit message is missing either a JIRA Issue (\"WARE-1111: <message>\", \"chore: <message>\", \"misc: <message>\" or 'Merge'"
+
+if ! grep -qE "$COMMIT_REGEX" "$COMMIT_EDITMSG"; then
+    echo "$ERROR_MSG" >&2
+    exit 1
+fi

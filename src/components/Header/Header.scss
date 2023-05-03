@@ -1,6 +1,5 @@
 @import '../../styles/variables';
 
-
 .header {
   grid-area: header;
   display: flex;
@@ -14,7 +13,6 @@
     font-size: 24px;
     font-weight: bold;
   }
-
 
   .user-icon {
     width: 40px;
