@@ -6,32 +6,79 @@
   top: 0;
   bottom: 0;
   width: $sidebar-width;
-  background-color: transparent;
   box-shadow: $sidebar-shadow;
-  padding: 20px 20px 0;
   display: flex;
   flex-direction: column;
 
+  .logo-container {
+    height: $header-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to bottom, $secondary-color, $secondary-color, transparent);
+  }
+
   .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: $font-color-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: $primary-color;
+    path {
+      fill: $primary-color;
+    }
+    transition: transform 0.5s ease;
+  }
+
+  .logo:hover {
+    svg {
+      transform: rotate(180deg);
+    }
   }
 
   .menu {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1.5rem;
+    padding: 3rem 1.2rem 0;
+
+    .menu-link {
+      border-radius: 0.3rem;
+    }
 
     a {
       display: flex;
+      padding: 0.6rem;
+      line-height: 1.5rem;
       align-items: center;
-      gap: 10px;
-      color: $font-color-light;
+      gap: 1rem;
+      font-weight: 400;
+      color: var(--lighter-font-color);
       text-decoration: none;
+    }
 
+    .menu-link:hover {
+      background-color: lighten($primary-color, 60%);
+    }
+
+    .selected {
+      background-color: lighten($primary-color, 55%);
       &:hover {
-        color: $secondary-color;
+        background-color: lighten($primary-color, 55%);
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .menu-link:hover {
+        background-color: darken($primary-color, 10%);
+      }
+      .selected {
+        background-color: darken($primary-color, 20%);
+        &:hover {
+          background-color: $primary-color;
+        }
       }
     }
   }

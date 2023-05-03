@@ -18,10 +18,14 @@
   }
 }
 
-main {
+.main {
   grid-area: main;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - $header-height);
   overflow: hidden;
+  padding: 3rem 1.2rem 1.2rem;
+  @media (max-width: $breakpoint-mobile) {
+    min-height: calc(100vh - $header-height - $footer-height);
+  }
 }

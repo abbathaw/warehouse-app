@@ -1,11 +1,24 @@
 @import 'variables';
 
 a {
-  color: lighten($primary-color, 50%);
+  color: $font-color-light;
   text-decoration: none;
 }
 
 a:hover {
-  color: lighten($primary-color, 15%);
+  color: lighten($font-color-light, 15%);
   text-decoration: none;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: rotate 1s linear infinite;
 }

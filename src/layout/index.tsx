@@ -9,7 +9,7 @@ const Layout = () => {
     <div className="grid-container">
       <Sidebar />
       <Header />
-      <main>
+      <main className="main">
         <Outlet />
       </main>
       <Footer />

@@ -9,14 +9,20 @@
     position: sticky;
     bottom: 0;
     height: $footer-height;
-    background-color: $sidebar-bg;
+    box-shadow: $sidebar-shadow;
     justify-content: space-around;
     align-items: center;
     z-index: 1000;
 
     a {
-      color: $font-color-light;
+      color: var(--lighter-font-color);
       text-decoration: none;
+    }
+
+    .selected {
+      path {
+        fill: $secondary-color;
+      }
 
       &:hover {
         color: $secondary-color;

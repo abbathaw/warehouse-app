@@ -24,3 +24,25 @@ export const getNavLinks = () => {
     },
   ];
 };
+
+export const getPageTitleByPath = (path: string) => {
+  let pageTitle;
+
+  switch (path) {
+    case '/':
+      pageTitle = 'Home';
+      break;
+    case '/products':
+      pageTitle = 'Products';
+      break;
+    case '/inventory':
+      pageTitle = 'Inventory';
+      break;
+    case '/sales':
+      pageTitle = 'Sales';
+      break;
+    default:
+      pageTitle = '';
+  }
+  return pageTitle;
+};

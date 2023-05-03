@@ -1,25 +1,10 @@
-import Layout from './layout';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { SWRConfig } from 'swr';
 import { fetcher } from './api/fetcher.ts';
 import { ErrorBoundary } from 'react-error-boundary';
-import ErrorPage from './components/ErrorPage.tsx';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import Loading from './components/Loading.tsx';
+import { router } from './router';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: '/',
-        element: <Loading />,
-      },
-    ],
-  },
-]);
 function App() {
   return (
     <>

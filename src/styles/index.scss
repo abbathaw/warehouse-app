@@ -2,12 +2,18 @@
 @import 'reset';
 @import 'common';
 
+:root {
+  --font-color: #{$font-color-light};
+  --lighter-font-color: lighten($font-color-light, 20%);
+  --bg-color: #{$bg-light};
+  --bg-color-darkened: #{darken($bg-light, 2%)};
+}
+
 body {
   font-family: 'Noto Sans', sans-serif;
   color-scheme: light dark;
-  color: $font-color-light;
-  background-color: $bg-light;
-
+  color: var(--font-color);
+  background-color: var(--bg-color-darkened);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,22 +21,11 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.spinner {
-  animation: rotate 1s linear infinite;
-}
-
 @media (prefers-color-scheme: dark) {
-  body {
-    color: $font-color-dark;
-    background-color: $bg-dark;
+  :root {
+    --font-color: #{$font-color-dark};
+    --lighter-font-color: #{lighten($font-color-dark, 20%)};
+    --bg-color: #{$bg-dark};
+    --bg-color-darkened: #{lighten($bg-dark, 3%)};
   }
 }
