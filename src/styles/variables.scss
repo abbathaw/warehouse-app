@@ -1,6 +1,22 @@
-$primary-color: #004146;
-$secondary-color: #191919;
-$white-color: #EFF5F9;
+$primary-color: #0051BA;
+$secondary-color: #FFDA1A;
+
+$font-color-light: #000000;
+$font-color-dark: #f0f1f3;
+
+$bg-light: #ffffff;
+$bg-dark: #37434c;
 
 $breakpoint-tablet: 768px;
 $breakpoint-mobile: 480px;
+
+//Sidebar
+$sidebar-width: 250px;
+$sidebar-bg: $bg-light;
+$sidebar-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+//Header
+$header-height: 60px;
+
+//Footer
+$footer-height: 60px;

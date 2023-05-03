@@ -1,0 +1,42 @@
+@import '../../styles/variables';
+
+.sidebar {
+  grid-area: sidebar;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: $sidebar-width;
+  background-color: transparent;
+  box-shadow: $sidebar-shadow;
+  padding: 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: $font-color-light;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: $font-color-light;
+      text-decoration: none;
+
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    display: none;
+  }
+}

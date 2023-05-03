@@ -1,14 +1,19 @@
-import NavBar from '../components/NavBar.tsx';
 import { Outlet } from 'react-router-dom';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import './Layout.scss';
 
 const Layout = () => {
   return (
-    <>
-      <NavBar />
+    <div className="grid-container">
+      <Sidebar />
+      <Header />
       <main>
         <Outlet />
       </main>
-    </>
+      <Footer />
+    </div>
   );
 };
 

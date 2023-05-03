@@ -1,26 +1,20 @@
 
 @import 'variables';
 @import 'reset';
-@import "navBar";
+@import "common";
 
 
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   color-scheme: light dark;
-  color: $white-color;
-  background-color: $secondary-color;
+  color: $font-color-light;
+  background-color: $bg-light;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 2rem 2rem;
 }
 
 @keyframes rotate {
@@ -37,9 +31,9 @@ body {
 }
 
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   body {
-    color: $secondary-color;
-    background-color: $white-color;
+    color: $font-color-dark;
+    background-color: $bg-dark;
   }
 }

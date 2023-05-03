@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+
+
+.header {
+  grid-area: header;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: $header-height;
+  padding: 0 20px;
+  background-color: $bg-light;
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+
+  .user-icon {
+    width: 40px;
+    height: 40px;
+    background-color: $font-color-light;
+    border-radius: 50%;
+  }
+}

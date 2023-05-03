@@ -1,0 +1,26 @@
+@import '../../styles/variables';
+
+.footer {
+  grid-area: footer;
+  display: none;
+
+  @media (max-width: $breakpoint-mobile) {
+    display: flex;
+    position: sticky;
+    bottom: 0;
+    height: $footer-height;
+    background-color: $sidebar-bg;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+
+    a {
+      color: $font-color-light;
+      text-decoration: none;
+
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+  }
+}
