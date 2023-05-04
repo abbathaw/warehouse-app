@@ -9,8 +9,9 @@ interface IEditArticle {
   handleSubmit: (article: IArticle) => void;
   handleCancel: () => void;
   isSubmitting: boolean;
+  errorMsg: string;
 }
-const EditArticle = ({ article, handleCancel, handleSubmit, isSubmitting }: IEditArticle) => {
+const EditArticle = ({ article, handleCancel, handleSubmit, isSubmitting, errorMsg }: IEditArticle) => {
   const [name, setName] = useState(article.name);
   const [amount, setAmount] = useState(article.amountInStock);
   const [error, setError] = useState('');
@@ -72,12 +73,14 @@ const EditArticle = ({ article, handleCancel, handleSubmit, isSubmitting }: IEdi
           className={`action-icon ${isSubmitting && 'spinner'}`}
           icon={isSubmitting ? faSpinner : faCheckCircle}
           onClick={submitData}
-          style={{ cursor: error || isSubmitting ? 'not-allowed' : 'pointer' }}
+          style={{ cursor: isSubmitting || error ? 'not-allowed' : 'pointer' }}
           title="Submit Edit"
         />
         <FontAwesomeIcon className="action-icon" icon={faTimesCircle} onClick={handleCancel} title="Cancel Edit" />
       </div>
-      <div className="extra-info-row">{error && <div className="error-message">{error}</div>}</div>
+      <div className="extra-info-row">
+        {(error || errorMsg) && <div className="error-message">{error ? error : errorMsg}</div>}
+      </div>
     </div>
   );
 };

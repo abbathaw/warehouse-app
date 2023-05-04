@@ -2,28 +2,50 @@ import { useState } from 'react';
 import ViewArticle from './ViewArticle.tsx';
 import EditArticle from './EditArticle.tsx';
 import { IArticle } from '../../types';
+import { ARTICLES_QUERY_KEY, deleteArticle, editArticle } from '../../api/articles';
+import useEditMutation from '../../hooks/useEditMutation.tsx';
+import { toast } from 'react-toastify';
+import useDeleteMutation from '../../hooks/useDeleteMutation.tsx';
 
-const Article = ({ article }: { article: IArticle }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+interface IArticleComponent {
+  article: IArticle;
+}
+
+const Article = ({ article }: IArticleComponent) => {
   const [isEditMode, setIsEditMode] = useState(false);
-  const handleEdit = () => {
-    console.log('editing');
-    setIsSubmitting(false);
-    setIsEditMode(true);
-  };
+
+  const { editMutation, apiError } = useEditMutation({
+    queryKey: ARTICLES_QUERY_KEY,
+    mutationFn: editArticle,
+    onSuccessCallback: () => {
+      setIsEditMode(false);
+      toast.success(`${article.name} Updated`);
+    },
+  });
+
+  const { deleteMutation } = useDeleteMutation({
+    queryKey: ARTICLES_QUERY_KEY,
+    mutationFn: deleteArticle,
+    onErrorCallback: () => {
+      toast.error(`${article.name} could not be deleted`);
+    },
+    onSuccessCallback: () => {
+      toast.success(`${article.name} Deleted`);
+    },
+  });
 
   const handleEditSubmit = (article: IArticle) => {
-    console.log('editing submitting', article.name);
-    setIsSubmitting(true);
-    setIsEditMode(true);
+    editMutation.mutate(article);
   };
 
+  const handleEdit = () => {
+    setIsEditMode(true);
+  };
   const handleEditCancel = () => {
-    console.log('editing cancel');
     setIsEditMode(false);
   };
   const handleDelete = () => {
-    console.log('delete');
+    deleteMutation.mutate(article);
   };
 
   return isEditMode ? (
@@ -31,7 +53,8 @@ const Article = ({ article }: { article: IArticle }) => {
       article={article}
       handleCancel={handleEditCancel}
       handleSubmit={handleEditSubmit}
-      isSubmitting={isSubmitting}
+      isSubmitting={editMutation.isLoading}
+      errorMsg={apiError}
     />
   ) : (
     <ViewArticle article={article} handleEdit={handleEdit} handleDelete={handleDelete} />

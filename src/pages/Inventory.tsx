@@ -1,12 +1,18 @@
-import { BASE_URL, inventoryAPI } from '../api/endpoints.ts';
-import useSWR from 'swr';
+import { useQuery } from '@tanstack/react-query';
 import Loading from '../components/Loading.tsx';
 import Error from '../components/Error.tsx';
 import Article from '../components/Article';
 import { IArticle } from '../types';
+import { ARTICLES_QUERY_KEY, getArticles } from '../api/articles';
 
 const Inventory = () => {
-  const { data, error, isLoading } = useSWR<IArticle[]>(`${BASE_URL}${inventoryAPI()}`);
+  const { isLoading, error, data } = useQuery<IArticle[]>({
+    queryKey: [ARTICLES_QUERY_KEY],
+    queryFn: async () => {
+      const axiosResponse = await getArticles();
+      return axiosResponse.data;
+    },
+  });
 
   if (isLoading) {
     return <Loading />;

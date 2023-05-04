@@ -2,7 +2,7 @@
 
 A React application that renders a warehouse UI application to handle updating inventory and sales.
 
-Built with Vitejs, React, react-router, and SWR. Styling is done with scss.
+Built with Vitejs, React, react-router, and Tanstack Query. Styling is done with scss.
 
 ## Demo
 
@@ -28,11 +28,6 @@ This is now the recommended approach for react single page applications. It prov
 
 This is a small app, however, adding the react-router to application is beneficial for url and browser history.
 
-#### SWR
-
-[SWR](https://swr.vercel.app/) is an awesome library for data fetching which handles caching and revalidation out of the box. It also has support for handling paginated requests which in this scenario is required for the API.
-
-For this app, the SWR cache is persisted to localstorage and revalidation is disabled. The reason for this is to provide a faster experience and reduce the calls to the free API since this data is not updated every day.
 
 ### Improvement List for a production ready app
 
