@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../layout';
 import ErrorPage from '../components/ErrorPage.tsx';
 import Loading from '../components/Loading.tsx';
+import Home from '../pages/Home.tsx';
+import Inventory from '../pages/Inventory.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -11,11 +13,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Loading />,
+        element: <Home />,
       },
       {
         path: '/inventory',
-        element: <Loading />,
+        element: <Inventory />,
       },
       {
         path: '/products',

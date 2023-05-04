@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(to bottom, $secondary-color, $secondary-color, transparent);
+    background-image: linear-gradient(to bottom, $secondary-color, $secondary-color 90%, transparent);
   }
 
   .logo {

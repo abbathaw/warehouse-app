@@ -10,7 +10,7 @@ const Footer = () => {
     <footer className="footer">
       {getNavLinks().map((navLink) => (
         <Link key={navLink.link} to={navLink.link} className={navLink.link === currentPage ? 'selected' : ''}>
-          <FontAwesomeIcon icon={navLink.icon} />
+          <FontAwesomeIcon icon={navLink.icon} title={navLink.label} />
         </Link>
       ))}
     </footer>

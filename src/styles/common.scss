@@ -10,6 +10,46 @@ a:hover {
   text-decoration: none;
 }
 
+.button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  outline: none;
+  border: 1px solid var(--font-color);
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid $secondary-color;
+  }
+}
+
+.primary {
+  background-color: $secondary-color;
+  color: $primary-color;
+  padding: 0.8rem;
+  font-weight: 800;
+  border: none;
+  &:hover {
+    background-color: lighten($secondary-color, 10%);
+    border: none;
+  }
+}
+
+.secondary {
+  background-color: transparent;
+  padding: 0.8rem;
+  font-weight: 800;
+  border: 1px solid $secondary-color;
+  &:hover {
+    background-color: lighten($secondary-color, 30%);
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 0.8rem;
+}
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);

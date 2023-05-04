@@ -1,1 +1,5 @@
-export const BASE_URL = import.meta.env.VITE_APP_API_URL || '';
+export const BASE_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001';
+
+export const inventoryAPI = () => {
+  return `/articles`;
+};
