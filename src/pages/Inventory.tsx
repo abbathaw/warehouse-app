@@ -4,6 +4,7 @@ import Error from '../components/Error.tsx';
 import Article from '../components/Article';
 import { IArticle } from '../types';
 import { ARTICLES_QUERY_KEY, getArticles } from '../api/articles';
+import CreateArticle from '../components/Article/CreateArticle.tsx';
 
 const Inventory = () => {
   const { isLoading, error, data } = useQuery<IArticle[]>({
@@ -24,9 +25,7 @@ const Inventory = () => {
 
   return (
     <div>
-      <div className="button-group">
-        <button className={'button primary'}>Add new item</button>
-      </div>
+      <CreateArticle />
       <div className="table-row table-header">
         <div>Name</div>
         <div>Quantity</div>

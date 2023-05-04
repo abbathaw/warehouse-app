@@ -23,6 +23,7 @@ const useEditMutation = <T extends HasId>({
     },
     onMutate: () => setApiError(''),
     onSuccess: async (res) => {
+      setApiError('');
       queryClient.setQueryData<T[]>([queryKey], (oldData) => {
         if (oldData) {
           return oldData.map((item) => (item.id === res.data.id ? res.data : item));

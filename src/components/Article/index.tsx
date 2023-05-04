@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ViewArticle from './ViewArticle.tsx';
-import EditArticle from './EditArticle.tsx';
+import EditArticleForm from './EditArticleForm.tsx';
 import { IArticle } from '../../types';
 import { ARTICLES_QUERY_KEY, deleteArticle, editArticle } from '../../api/articles';
 import useEditMutation from '../../hooks/useEditMutation.tsx';
@@ -49,7 +49,7 @@ const Article = ({ article }: IArticleComponent) => {
   };
 
   return isEditMode ? (
-    <EditArticle
+    <EditArticleForm
       article={article}
       handleCancel={handleEditCancel}
       handleSubmit={handleEditSubmit}
@@ -57,7 +57,12 @@ const Article = ({ article }: IArticleComponent) => {
       errorMsg={apiError}
     />
   ) : (
-    <ViewArticle article={article} handleEdit={handleEdit} handleDelete={handleDelete} />
+    <ViewArticle
+      article={article}
+      handleEdit={handleEdit}
+      handleDelete={handleDelete}
+      isDeleting={deleteMutation.isLoading}
+    />
   );
 };
 

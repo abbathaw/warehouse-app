@@ -28,7 +28,6 @@ This is now the recommended approach for react single page applications. It prov
 
 This is a small app, however, adding the react-router to application is beneficial for url and browser history.
 
-
 ### Improvement List for a production ready app
 
 - Improved parallel fetching for paginated requests (for faster requests when opening a season page)

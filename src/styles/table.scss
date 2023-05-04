@@ -39,7 +39,6 @@
 .extra-info-row {
   margin: 0.2rem;
   font-size: 0.8rem;
-
 }
 
 .error-message {
@@ -62,4 +61,34 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
+}
+
+.form {
+  padding: 2rem;
+  display: grid;
+  grid-gap: 1rem;
+  justify-content: center;
+
+  .error-row {
+    line-height: 1rem;
+    height: 1rem;
+  }
+
+  .button-group {
+    justify-self: center;
+  }
+
+  .label {
+    font-size: 0.8rem;
+    font-weight: 300;
+  }
+
+  .row-input {
+    width: 20rem;
+    margin: 1rem 0;
+
+    @media (max-width: $breakpoint-mobile) {
+      width: initial;
+    }
+  }
 }

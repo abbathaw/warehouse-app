@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTimesCircle, faPlusSquare, faMinusSquare } from '@fortawesome/free-regular-svg-icons';
+import { faCheckCircle, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { IArticle } from '../../types';
+import NumberIncrementInput from '../Form/NumberIncrementInput.tsx';
 
 interface IEditArticle {
   article: IArticle;
@@ -11,20 +12,10 @@ interface IEditArticle {
   isSubmitting: boolean;
   errorMsg: string;
 }
-const EditArticle = ({ article, handleCancel, handleSubmit, isSubmitting, errorMsg }: IEditArticle) => {
+const EditArticleForm = ({ article, handleCancel, handleSubmit, isSubmitting, errorMsg }: IEditArticle) => {
   const [name, setName] = useState(article.name);
   const [amount, setAmount] = useState(article.amountInStock);
   const [error, setError] = useState('');
-
-  const updateAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(event.target.value);
-    if (newValue < 0) {
-      setError('Amount should not be below zero');
-      return;
-    }
-    setError('');
-    setAmount(newValue);
-  };
 
   const updateName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -36,17 +27,12 @@ const EditArticle = ({ article, handleCancel, handleSubmit, isSubmitting, errorM
     setName(newValue);
   };
 
-  const incrementAmount = () => {
-    setAmount((prevAmount) => prevAmount + 1);
-  };
-
-  const decrementAmount = () => {
-    if (amount > 0) {
-      setAmount((prevAmount) => prevAmount - 1);
-    }
-  };
-
   const submitData = () => {
+    const isNothingUpdated = name === article.name && amount === article.amountInStock;
+    if (isNothingUpdated) {
+      handleCancel();
+      return;
+    }
     if (!error) {
       handleSubmit({ ...article, name, amountInStock: amount });
     }
@@ -63,11 +49,8 @@ const EditArticle = ({ article, handleCancel, handleSubmit, isSubmitting, errorM
           <input className="row-input" type="text" value={name} onChange={updateName} />
         </div>
       </div>
-      <div className="amount-input-container">
-        <FontAwesomeIcon className="action-icon" icon={faMinusSquare} onClick={decrementAmount} title="Add 1" />
-        <input className="row-input" type="number" value={amount} onChange={updateAmount} />
-        <FontAwesomeIcon className="action-icon" icon={faPlusSquare} onClick={incrementAmount} title="Subtract 1" />
-      </div>
+      <NumberIncrementInput updateAmount={setAmount} amount={amount} updateError={setError} />
+
       <div className="action-icons">
         <FontAwesomeIcon
           className={`action-icon ${isSubmitting && 'spinner'}`}
@@ -85,4 +68,4 @@ const EditArticle = ({ article, handleCancel, handleSubmit, isSubmitting, errorM
   );
 };
 
-export default EditArticle;
+export default EditArticleForm;

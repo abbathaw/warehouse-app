@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { HasId, IUseMutation } from '../types/mutations.ts';
+import { AxiosError } from 'axios';
 
 const useDeleteMutation = <T extends HasId>({
   queryKey,
@@ -14,8 +15,9 @@ const useDeleteMutation = <T extends HasId>({
   const deleteMutation = useMutation({
     mutationFn: mutationFn,
     retry: 1,
-    onError: (error) => {
-      console.log('API ERROR', error);
+    onError: (error: AxiosError) => {
+      // TODO handle error parsing here
+      console.log('API ERROR', error.message);
       setApiError('Delete failed. Try again.');
       if (onErrorCallback) {
         onErrorCallback();
@@ -23,6 +25,7 @@ const useDeleteMutation = <T extends HasId>({
     },
     onMutate: () => setApiError(''),
     onSuccess: async (_, context) => {
+      setApiError('');
       queryClient.setQueryData<T[]>([queryKey], (oldData) => {
         if (oldData) {
           return oldData.filter((item) => item.id !== context.id);
