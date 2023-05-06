@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Loading from '../components/Loading.tsx';
 import Error from '../components/Error.tsx';
 import Article from '../components/Article';
@@ -7,11 +7,17 @@ import { ARTICLES_QUERY_KEY, getArticles } from '../api/articles';
 import CreateArticle from '../components/Article/CreateArticle.tsx';
 
 const Inventory = () => {
+  const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery<IArticle[]>({
     queryKey: [ARTICLES_QUERY_KEY],
     queryFn: async () => {
       const axiosResponse = await getArticles();
       return axiosResponse.data;
+    },
+    onSuccess: (data) => {
+      data.forEach((article) => {
+        queryClient.setQueryData([ARTICLES_QUERY_KEY, article.id], article);
+      });
     },
   });
 

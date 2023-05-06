@@ -4,6 +4,8 @@ import ErrorPage from '../components/ErrorPage.tsx';
 import Loading from '../components/Loading.tsx';
 import Home from '../pages/Home.tsx';
 import Inventory from '../pages/Inventory.tsx';
+import Products from '../pages/Products.tsx';
+import CreateProduct from '../components/Product/CreateProduct.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +23,11 @@ export const router = createBrowserRouter([
       },
       {
         path: '/products',
-        element: <Loading />,
+        element: <Products />,
+      },
+      {
+        path: '/products/new',
+        element: <CreateProduct />,
       },
       {
         path: '/sales',

@@ -6,12 +6,14 @@ import { ARTICLES_QUERY_KEY, deleteArticle, editArticle } from '../../api/articl
 import useEditMutation from '../../hooks/useEditMutation.tsx';
 import { toast } from 'react-toastify';
 import useDeleteMutation from '../../hooks/useDeleteMutation.tsx';
+import useGetArticle from '../../hooks/useGetArticle.tsx';
 
 interface IArticleComponent {
   article: IArticle;
 }
 
 const Article = ({ article }: IArticleComponent) => {
+  useGetArticle(article.id);
   const [isEditMode, setIsEditMode] = useState(false);
 
   const { editMutation, apiError } = useEditMutation({

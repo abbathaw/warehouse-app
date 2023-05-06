@@ -3,18 +3,18 @@ import Modal from '../Modal';
 import NewArticleForm from './NewArticleForm.tsx';
 import useCreateMutation from '../../hooks/useCreateMutation.tsx';
 import { ARTICLES_QUERY_KEY, createArticle } from '../../api/articles';
-import { IArticle } from '../../types';
+import { IArticleInput } from '../../types';
 import { toast } from 'react-toastify';
 
 const CreateArticle = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
-  const { createMutation, apiError } = useCreateMutation<Omit<IArticle, 'id'>>({
+  const { createMutation, apiError } = useCreateMutation<IArticleInput>({
     queryKey: ARTICLES_QUERY_KEY,
     mutationFn: createArticle,
   });
 
-  const handleSubmit = (article: Omit<IArticle, 'id'>) => {
+  const handleSubmit = (article: IArticleInput) => {
     createMutation.mutate(article, {
       onSuccess: () => {
         setShowAddModal(false);

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { IUseMutation } from '../types/mutations.ts';
+import { IUseMutation } from '../types';
+import { AxiosError } from 'axios';
 
 const useCreateMutation = <T,>({ queryKey, mutationFn }: IUseMutation<T>) => {
   const queryClient = useQueryClient();
@@ -9,7 +10,7 @@ const useCreateMutation = <T,>({ queryKey, mutationFn }: IUseMutation<T>) => {
   const createMutation = useMutation({
     mutationFn: mutationFn,
     retry: 1,
-    onError: (error) => {
+    onError: (error: AxiosError) => {
       // TODO handle error parsing here
       console.log('API ERROR', error);
       setApiError('Create failed. Try again.');

@@ -1,2 +1,3 @@
 export * from './error.ts';
-export * from './inventory.ts';
+export * from './resourceTypes.ts';
+export * from './mutations.ts';

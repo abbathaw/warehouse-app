@@ -30,6 +30,7 @@ const useEditMutation = <T extends HasId>({
         }
         return undefined;
       });
+      queryClient.setQueryData<T>([queryKey, res.data.id], res.data);
       if (onSuccessCallback) {
         onSuccessCallback();
       }
