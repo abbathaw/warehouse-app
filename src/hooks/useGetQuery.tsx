@@ -1,13 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { IArticle } from '../types';
-import { ARTICLES_QUERY_KEY, getArticle } from '../api/articles';
+import { IUseQuery } from '../types';
 import { AxiosError } from 'axios';
 
-const useGetArticle = (articleId: string) => {
-  const { data, isLoading, isError } = useQuery<IArticle>({
-    queryKey: [ARTICLES_QUERY_KEY, articleId],
+const useGetQuery = <T,>({ id, queryFn, queryKey }: IUseQuery<T>) => {
+  const { data, isLoading, isError } = useQuery<T>({
+    queryKey: [queryKey, id],
     queryFn: async () => {
-      const axiosResponse = await getArticle(articleId);
+      const axiosResponse = await queryFn(id);
       return axiosResponse.data;
     },
     retry: (failureCount, error) => {
@@ -22,4 +21,4 @@ const useGetArticle = (articleId: string) => {
   return { data, isLoading, isError };
 };
 
-export default useGetArticle;
+export default useGetQuery;

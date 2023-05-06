@@ -3,13 +3,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import ProductArticleDetail from './ProductArticleDetail.tsx';
+import { useNavigate } from 'react-router-dom';
+import useDeleteMutation from '../../hooks/useDeleteMutation.tsx';
+import { toast } from 'react-toastify';
+import { deleteProduct, PRODUCTS_QUERY_KEY } from '../../api/products';
 
 interface IProductComponent {
   product: IProduct;
 }
 const Product = ({ product }: IProductComponent) => {
-  const handleEdit = () => {};
-  const handleDelete = () => {};
+  const navigate = useNavigate();
+
+  const { deleteMutation } = useDeleteMutation({
+    queryKey: PRODUCTS_QUERY_KEY,
+    mutationFn: deleteProduct,
+    onErrorCallback: () => {
+      toast.error(`${product.name} could not be deleted`);
+    },
+    onSuccessCallback: () => {
+      toast.success(`${product.name} Deleted`);
+    },
+  });
+
+  const handleEdit = () => {
+    navigate(`/products/edit/${product.id}`);
+  };
+  const handleDelete = () => {
+    deleteMutation.mutate(product);
+  };
   const isDeleting = false;
   return (
     <div className="table-row">

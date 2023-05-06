@@ -10,3 +10,9 @@ export interface IUseMutation<T> {
   onSuccessCallback?: () => void;
   onErrorCallback?: () => void;
 }
+
+export interface IUseQuery<T> {
+  id: string;
+  queryKey: string;
+  queryFn: (id: string) => Promise<AxiosResponse<T, unknown>>;
+}

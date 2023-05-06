@@ -6,6 +6,7 @@ import Home from '../pages/Home.tsx';
 import Inventory from '../pages/Inventory.tsx';
 import Products from '../pages/Products.tsx';
 import CreateProduct from '../components/Product/CreateProduct.tsx';
+import EditProduct from '../components/Product/EditProduct.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: '/products/new',
         element: <CreateProduct />,
+      },
+      {
+        path: '/products/edit/:id',
+        element: <EditProduct />,
       },
       {
         path: '/sales',

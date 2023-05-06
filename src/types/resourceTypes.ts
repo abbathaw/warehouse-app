@@ -5,6 +5,7 @@ export interface IArticle {
 }
 
 export type IArticleInput = Omit<IArticle, 'id'>;
+export type IProductInput = Omit<IProduct, 'id'>;
 
 export interface IProductArticle {
   id: string;

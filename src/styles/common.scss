@@ -62,3 +62,17 @@ a:hover {
 .spinner {
   animation: rotate 1s linear infinite;
 }
+
+.flex-space {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  margin: 10px 0;
+  .label {
+    margin-top: 2px;
+    font-size: 0.8rem;
+    font-weight: 300;
+  }
+}

@@ -8,6 +8,10 @@ export const getProducts = async () => {
   return await axiosInstance.get<IProduct[]>(`/products`);
 };
 
+export const getProduct = async (id: string) => {
+  return await axiosInstance.get<IProduct>(`/products/${id}`);
+};
+
 export const createProduct = async (product: Omit<IProduct, 'id'>): Promise<AxiosResponse<IProduct>> => {
   return await axiosInstance.post(`/products`, product);
 };

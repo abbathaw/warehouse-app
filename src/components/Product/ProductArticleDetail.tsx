@@ -1,4 +1,7 @@
-import useGetArticle from '../../hooks/useGetArticle.tsx';
+import useGetQuery from '../../hooks/useGetQuery.tsx';
+import { ARTICLES_QUERY_KEY, getArticle } from '../../api/articles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWarning, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 interface IProductArticleDetail {
   articleId: string;
@@ -6,20 +9,35 @@ interface IProductArticleDetail {
 }
 
 const ProductArticleDetail = ({ articleId, amount }: IProductArticleDetail) => {
-  const { data, isLoading, isError } = useGetArticle(articleId);
-
+  const { data, isLoading, isError } = useGetQuery({
+    id: articleId,
+    queryKey: ARTICLES_QUERY_KEY,
+    queryFn: getArticle,
+  });
   if (isLoading) {
     return <div>Loading article details</div>;
   }
 
   if (isError) {
-    return <div>Article with id {articleId} failed to load</div>;
+    return (
+      <div className="container">
+        <div>
+          <FontAwesomeIcon className={`action-icon`} icon={faCircleXmark} title="missing" color={'red'} />{' '}
+          <span>Article Not found</span>{' '}
+        </div>
+        <div className="label">Quantity: {amount}</div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <div>
-        {data?.name} - Quantity {amount}
+    <div className="container">
+      <div>{data?.name}</div>
+      <div className="label">
+        <span>Quantity: {amount} </span>{' '}
+        {amount > (data?.amountInStock || 0) && (
+          <FontAwesomeIcon icon={faWarning} title="Low inventory" color={'orange'} />
+        )}
       </div>
     </div>
   );
