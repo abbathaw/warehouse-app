@@ -1,4 +1,4 @@
-import { ISale } from '../../types';
+import { IArticle, ISale } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import useGetQuery from '../../hooks/useGetQuery.tsx';
 import { getProduct, PRODUCTS_QUERY_KEY } from '../../api/products';
@@ -9,6 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../../utils/formats.ts';
+import { useQuery } from '@tanstack/react-query';
+import { ARTICLES_QUERY_KEY, getArticles } from '../../api/articles';
+import { useUpdateInventoryMutation } from '../../hooks/useUpdateInventoryMutation.tsx';
+import { calculateInventoryUpdates } from '../../utils/calculateInventoryUpdates.ts';
 
 interface ISaleComponent {
   sale: ISale;
@@ -17,6 +21,15 @@ interface ISaleComponent {
 const Sale = ({ sale }: ISaleComponent) => {
   const navigate = useNavigate();
   const { data: productData } = useGetQuery({ id: sale.productId, queryKey: PRODUCTS_QUERY_KEY, queryFn: getProduct });
+
+  const { data: articlesList } = useQuery<IArticle[]>({
+    queryKey: [ARTICLES_QUERY_KEY],
+    queryFn: async () => {
+      const axiosResponse = await getArticles();
+      return axiosResponse.data;
+    },
+  });
+  const { updateInventory, apiError: updateInventoryError } = useUpdateInventoryMutation();
 
   const { deleteMutation } = useDeleteMutation({
     queryKey: SALES_QUERY_KEY,
@@ -33,7 +46,25 @@ const Sale = ({ sale }: ISaleComponent) => {
     navigate(`/sales/edit/${sale.id}`);
   };
   const handleDelete = () => {
-    deleteMutation.mutate(sale);
+    if (productData) {
+      const prevAmountSold = sale.amountSold;
+      const newAmountSold = 0;
+      const inventoryUpdates = calculateInventoryUpdates(
+        productData,
+        { prev: prevAmountSold, new: newAmountSold },
+        articlesList,
+      );
+      updateInventory.mutate(inventoryUpdates, {
+        onSuccess: () => {
+          deleteMutation.mutate(sale);
+        },
+        onError: () => {
+          toast.error(updateInventoryError ? updateInventoryError : 'Failed to update inventory. Please try again');
+        },
+      });
+    } else {
+      deleteMutation.mutate(sale);
+    }
   };
   const isDeleting = deleteMutation.isLoading;
 

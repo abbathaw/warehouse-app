@@ -31,5 +31,19 @@ export type ISaleInput = {
 
 export type ISaleEditInput = {
   id: string;
+  productId: string;
   amountSold: number;
 };
+
+export type IInventoryUpdate = {
+  id: string;
+} & (
+  | {
+      amountInStock: number;
+      amountToSubtract?: never;
+    }
+  | {
+      amountInStock?: never;
+      amountToSubtract: number;
+    }
+);

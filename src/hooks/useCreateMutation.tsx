@@ -9,9 +9,8 @@ const useCreateMutation = <T,>({ queryKey, mutationFn }: IUseMutation<T>) => {
   const [apiError, setApiError] = useState('');
   const createMutation = useMutation({
     mutationFn: mutationFn,
-    retry: 1,
+    retry: 2,
     onError: (error: AxiosError) => {
-      // TODO handle error parsing here
       console.log('API ERROR', error);
       setApiError('Create failed. Try again.');
     },

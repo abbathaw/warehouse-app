@@ -16,7 +16,6 @@ const useDeleteMutation = <T extends HasId>({
     mutationFn: mutationFn,
     retry: 1,
     onError: (error: AxiosError) => {
-      // TODO handle error parsing here
       console.log('API ERROR', error.message);
       setApiError('Delete failed. Try again.');
       if (onErrorCallback) {

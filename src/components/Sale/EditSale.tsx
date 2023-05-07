@@ -3,14 +3,30 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useGetQuery from '../../hooks/useGetQuery.tsx';
 import { editSale, getSale, SALES_QUERY_KEY } from '../../api/sales';
 import useEditMutation from '../../hooks/useEditMutation.tsx';
-import { ISaleEditInput, ISaleInput } from '../../types';
+import { IArticle, IProduct, ISaleEditInput, ISaleInput } from '../../types';
 import Loading from '../Loading.tsx';
 import { toast } from 'react-toastify';
+import { useUpdateInventoryMutation } from '../../hooks/useUpdateInventoryMutation.tsx';
+import { calculateInventoryUpdates } from '../../utils/calculateInventoryUpdates.ts';
+import { useQuery } from '@tanstack/react-query';
+import { ARTICLES_QUERY_KEY, getArticles } from '../../api/articles';
 
 const EditSale = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data, isLoading, isError } = useGetQuery({
+  const { data: articlesList } = useQuery<IArticle[]>({
+    queryKey: [ARTICLES_QUERY_KEY],
+    queryFn: async () => {
+      const axiosResponse = await getArticles();
+      return axiosResponse.data;
+    },
+  });
+  const { updateInventory, apiError: updateInventoryError } = useUpdateInventoryMutation();
+  const {
+    data: originalSale,
+    isLoading,
+    isError,
+  } = useGetQuery({
     id: id || '',
     queryKey: SALES_QUERY_KEY,
     queryFn: getSale,
@@ -27,21 +43,50 @@ const EditSale = () => {
     return <div>Failed to load sale</div>;
   }
 
-  const handleSubmit = (data: ISaleInput | ISaleEditInput) => {
+  const handleSubmit = ({
+    data,
+    productList,
+  }: {
+    data: ISaleInput | ISaleEditInput;
+    productList: IProduct[] | undefined;
+  }) => {
     const submitData = data as ISaleEditInput;
-    editMutation.mutate(submitData, {
-      onSuccess: () => {
-        toast.success(`Sale updated`);
-        navigate('/sales');
-      },
-      onError: () => {
-        toast.error(`Failed to update Sale`);
-      },
-    });
+    const product = productList?.find((item) => item.id === submitData.productId);
+    if (product) {
+      const prevAmountSold = originalSale?.amountSold || 0;
+      const newAmountSold = submitData.amountSold;
+      const inventoryUpdates = calculateInventoryUpdates(
+        product,
+        { prev: prevAmountSold, new: newAmountSold },
+        articlesList,
+      );
+
+      updateInventory.mutate(inventoryUpdates, {
+        onSuccess: () => {
+          editMutation.mutate(submitData, {
+            onSuccess: () => {
+              toast.success(`Sale updated`);
+              navigate('/sales');
+            },
+            onError: () => {
+              toast.error(`Inventory has been updated but failed to update Sale. Rollback required`);
+            },
+          });
+        },
+        onError: () => {
+          toast.error(updateInventoryError ? updateInventoryError : 'Failed to update inventory. Please try again');
+        },
+      });
+    }
   };
 
   return (
-    <CreateEditForm apiError={apiError} handleSubmit={handleSubmit} isSubmitting={editMutation.isLoading} sale={data} />
+    <CreateEditForm
+      apiError={apiError}
+      handleSubmit={handleSubmit}
+      isSubmitting={editMutation.isLoading}
+      sale={originalSale}
+    />
   );
 };
 

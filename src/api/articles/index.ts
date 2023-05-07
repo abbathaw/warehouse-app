@@ -1,5 +1,5 @@
 import axiosInstance from '../axiosInstance.ts';
-import { IArticle, IArticleInput } from '../../types';
+import { IArticle, IArticleInput, IInventoryUpdate } from '../../types';
 import { AxiosResponse } from 'axios';
 
 export const ARTICLES_QUERY_KEY = 'articles';
@@ -22,4 +22,8 @@ export const editArticle = async (article: IArticle) => {
 
 export const deleteArticle = async (article: IArticle) => {
   return await axiosInstance.delete<IArticle>(`/articles/${article.id}`);
+};
+
+export const bulkEditArticles = async (inventoryUpdates: IInventoryUpdate[]): Promise<AxiosResponse<IArticle[]>> => {
+  return await axiosInstance.patch(`/articles`, inventoryUpdates);
 };

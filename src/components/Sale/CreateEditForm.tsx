@@ -9,7 +9,13 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 interface ICreateEditForm {
   sale?: ISale | undefined;
   apiError: string;
-  handleSubmit: (data: ISaleInput | ISaleEditInput) => void;
+  handleSubmit: ({
+    data,
+    productList,
+  }: {
+    data: ISaleInput | ISaleEditInput;
+    productList: IProduct[] | undefined;
+  }) => void;
   isSubmitting: boolean;
 }
 const CreateEditForm = ({ sale, handleSubmit, apiError, isSubmitting }: ICreateEditForm) => {
@@ -34,9 +40,9 @@ const CreateEditForm = ({ sale, handleSubmit, apiError, isSubmitting }: ICreateE
     }
     if (!error) {
       if (sale) {
-        handleSubmit({ id: sale.id, productId, amountSold });
+        handleSubmit({ data: { id: sale.id, productId, amountSold }, productList });
       } else {
-        handleSubmit({ productId, amountSold });
+        handleSubmit({ data: { productId, amountSold }, productList });
       }
     }
   };
