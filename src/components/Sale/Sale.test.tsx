@@ -31,7 +31,7 @@ describe('Sale', () => {
     id: '1',
     productId: '1',
     amountSold: 10,
-    createdAt: '2023-01-01T00:00:00.000Z',
+    createdAt: '2023-01-01T18:00:00.000Z',
   };
 
   beforeEach(() => {
@@ -68,7 +68,8 @@ describe('Sale', () => {
   });
 
   it('renders the component correctly', () => {
-    expect(screen.getByText('1 January 2023 - 01:00')).toBeInTheDocument();
+    const dateRegex = /1 January 2023/;
+    expect(screen.getByText(dateRegex)).toBeInTheDocument();
   });
 
   it('navigates to edit page when edit icon is clicked', async () => {

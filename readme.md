@@ -8,7 +8,8 @@ Built with Vitejs, React, react-router, and Tanstack Query. Styling is done with
 
 ## Demo
 
-## Screenshots
+https://warehouse-store.netlify.app/
+
 
 ## Run locally
 
@@ -41,3 +42,12 @@ For example, when fetching data, it will retry 3 times. When mutating data, we a
 - Support for pagination, search and filtering. The UI requests will slow down if we have a very big array of articles and products.
 - The update of the inventory (after creating a new sale) should be a backend responsibility so it can handle atomic and consistent updates and rollback transactions. I guess this use case implementation on the frontend is ok for this simple app.
 - Extra testing implementations to increase test coverage on the components and support wider test cases.
+
+## Screenshots
+
+![screenshot1](./screenshots/image_1.png)
+![screenshot2](./screenshots/image_2.png)
+![screenshot3](./screenshots/image_3.png)
+![screenshot4](./screenshots/image_4.png)
+![screenshot5](./screenshots/image_5.png)
+![screenshot6](./screenshots/image_6.png)
