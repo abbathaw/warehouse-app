@@ -14,8 +14,7 @@ const useEditMutation = <T extends HasId>({
   const editMutation = useMutation({
     mutationFn: mutationFn,
     retry: 1,
-    onError: (error) => {
-      console.log('API ERROR', error);
+    onError: () => {
       setApiError('Update failed. Try again.');
       if (onErrorCallback) {
         onErrorCallback();

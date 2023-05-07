@@ -6,11 +6,12 @@ import CreateEditForm from './CreateEditForm.tsx';
 import { createSale, SALES_QUERY_KEY } from '../../api/sales';
 import { useUpdateInventoryMutation } from '../../hooks/useUpdateInventoryMutation.tsx';
 import { calculateInventoryUpdates } from '../../utils/calculateInventoryUpdates.ts';
+import { AxiosError } from 'axios';
 
 const CreateSale = () => {
   const navigate = useNavigate();
 
-  const { updateInventory, apiError: updateInventoryError } = useUpdateInventoryMutation();
+  const { updateInventory } = useUpdateInventoryMutation();
 
   const { createMutation, apiError } = useCreateMutation<ISaleInput>({
     queryKey: SALES_QUERY_KEY,
@@ -41,8 +42,9 @@ const CreateSale = () => {
             },
           });
         },
-        onError: () => {
-          toast.error(updateInventoryError ? updateInventoryError : 'Failed to update inventory. Please try again');
+        onError: (error: AxiosError) => {
+          const data = error.response?.data as { message: string };
+          toast.error(data ? data?.message : 'Failed to update inventory. Please try again');
         },
       });
     }

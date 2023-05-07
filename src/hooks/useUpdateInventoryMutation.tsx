@@ -2,11 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { IArticle } from '../types';
 import { ARTICLES_QUERY_KEY, bulkEditArticles } from '../api/articles';
-import { useState } from 'react';
 
 export const useUpdateInventoryMutation = () => {
   const queryClient = useQueryClient();
-  const [apiError, setApiError] = useState('');
   const updateInventory = useMutation({
     mutationFn: bulkEditArticles,
     retry: (failureCount, error) => {
@@ -17,7 +15,6 @@ export const useUpdateInventoryMutation = () => {
       return failureCount < 2;
     },
     onSuccess: (res: AxiosResponse<IArticle[]>) => {
-      setApiError('');
       queryClient.setQueryData<IArticle[]>([ARTICLES_QUERY_KEY], (oldData: IArticle[] | undefined) => {
         if (!oldData) return res.data;
 
@@ -33,10 +30,9 @@ export const useUpdateInventoryMutation = () => {
       });
     },
     onError: (error: AxiosError) => {
-      const data = error.response?.data as { message: string };
-      setApiError(`Failed to update inventory. ${data?.message}`);
+      return error;
     },
   });
 
-  return { updateInventory, apiError };
+  return { updateInventory };
 };

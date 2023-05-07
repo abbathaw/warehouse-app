@@ -10,6 +10,7 @@ import { useUpdateInventoryMutation } from '../../hooks/useUpdateInventoryMutati
 import { calculateInventoryUpdates } from '../../utils/calculateInventoryUpdates.ts';
 import { useQuery } from '@tanstack/react-query';
 import { ARTICLES_QUERY_KEY, getArticles } from '../../api/articles';
+import { AxiosError } from 'axios';
 
 const EditSale = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const EditSale = () => {
       return axiosResponse.data;
     },
   });
-  const { updateInventory, apiError: updateInventoryError } = useUpdateInventoryMutation();
+  const { updateInventory } = useUpdateInventoryMutation();
   const {
     data: originalSale,
     isLoading,
@@ -73,8 +74,9 @@ const EditSale = () => {
             },
           });
         },
-        onError: () => {
-          toast.error(updateInventoryError ? updateInventoryError : 'Failed to update inventory. Please try again');
+        onError: (error: AxiosError) => {
+          const data = error.response?.data as { message: string };
+          toast.error(data ? data?.message : 'Failed to update inventory. Please try again');
         },
       });
     }

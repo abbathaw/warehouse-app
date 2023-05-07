@@ -51,6 +51,7 @@ const CreateEditForm = ({ sale, handleSubmit, apiError, isSubmitting }: ICreateE
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     type: 'id' | 'amountSold',
   ) => {
+    setError('');
     if (type === 'id') {
       setProductId(event.target.value);
     } else {

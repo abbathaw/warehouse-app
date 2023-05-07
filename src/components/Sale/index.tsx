@@ -13,6 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ARTICLES_QUERY_KEY, getArticles } from '../../api/articles';
 import { useUpdateInventoryMutation } from '../../hooks/useUpdateInventoryMutation.tsx';
 import { calculateInventoryUpdates } from '../../utils/calculateInventoryUpdates.ts';
+import { AxiosError } from 'axios';
 
 interface ISaleComponent {
   sale: ISale;
@@ -29,7 +30,7 @@ const Sale = ({ sale }: ISaleComponent) => {
       return axiosResponse.data;
     },
   });
-  const { updateInventory, apiError: updateInventoryError } = useUpdateInventoryMutation();
+  const { updateInventory } = useUpdateInventoryMutation();
 
   const { deleteMutation } = useDeleteMutation({
     queryKey: SALES_QUERY_KEY,
@@ -58,8 +59,9 @@ const Sale = ({ sale }: ISaleComponent) => {
         onSuccess: () => {
           deleteMutation.mutate(sale);
         },
-        onError: () => {
-          toast.error(updateInventoryError ? updateInventoryError : 'Failed to update inventory. Please try again');
+        onError: (error: AxiosError) => {
+          const data = error.response?.data as { message: string };
+          toast.error(data ? data?.message : 'Failed to update inventory. Please try again');
         },
       });
     } else {
