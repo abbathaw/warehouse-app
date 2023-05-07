@@ -51,11 +51,12 @@ const CreateEditForm = ({ product, handleSubmit, apiError, isSubmitting }: ICrea
     index: number,
     type: 'id' | 'amountRequired',
   ) => {
+    setError('');
     const newArticleInputs = [...articleInputs];
     let updatedValue: string | number = event.target.value;
     if (type === 'amountRequired') {
       const numericValue = parseInt(event.target.value);
-      updatedValue = !isNaN(numericValue) ? numericValue : 1;
+      updatedValue = !isNaN(numericValue) ? numericValue : '';
     }
 
     newArticleInputs[index] = {
@@ -67,6 +68,25 @@ const CreateEditForm = ({ product, handleSubmit, apiError, isSubmitting }: ICrea
 
   const handleClickSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    if (!name) {
+      setError('Please add a name');
+      return;
+    }
+
+    const errorChecks: string[] = [];
+    articleInputs.forEach((articleInput) => {
+      const numericValue = parseInt(articleInput.amountRequired.toString());
+      if (isNaN(numericValue) || numericValue === 0) {
+        errorChecks.push('Numeric value not defined');
+      }
+      if (!articleInput.id) {
+        errorChecks.push('Article selection not added');
+      }
+    });
+    if (errorChecks.length > 0) {
+      setError(errorChecks.join(', '));
+      return;
+    }
     if (!name) {
       setError('Please add a name');
       return;
@@ -86,7 +106,7 @@ const CreateEditForm = ({ product, handleSubmit, apiError, isSubmitting }: ICrea
   };
 
   return (
-    <form className="form" onSubmit={handleClickSubmit}>
+    <form className="form" onSubmit={handleClickSubmit} role="form">
       <div className="form-row">
         <div>
           <label className="label" htmlFor="productNameInput">
@@ -142,6 +162,7 @@ const CreateEditForm = ({ product, handleSubmit, apiError, isSubmitting }: ICrea
             </label>
             <input
               id={`amountRequired-${index}`}
+              data-testid="number-input"
               className="row-input"
               type="number"
               value={input.amountRequired}

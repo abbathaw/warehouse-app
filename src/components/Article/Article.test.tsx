@@ -4,7 +4,6 @@ import { waitFor } from '@testing-library/react';
 import Article from './index.tsx';
 import { IArticle } from '../../types';
 import { describe, expect, MockedObject, vi } from 'vitest';
-// Import the mocked hooks
 import useDeleteMutation from '../../hooks/useDeleteMutation.tsx';
 import useEditMutation from '../../hooks/useEditMutation.tsx';
 import { ARTICLES_QUERY_KEY } from '../../api/articles';
@@ -15,7 +14,6 @@ const mockArticle: IArticle = {
   amountInStock: 10,
 };
 
-// Mock the useDeleteMutation and useEditMutation hooks
 vi.mock('../../hooks/useDeleteMutation.tsx');
 vi.mock('../../hooks/useEditMutation.tsx');
 
@@ -67,7 +65,6 @@ describe('Article', () => {
     const deleteButton = screen.getByTitle('Delete item');
     fireEvent.click(deleteButton);
 
-    // Check if the deleteMutation.mutate function was called with the correct parameters
     await waitFor(() => {
       const deleteArticle = vi.fn();
       const mockedDeleteMutation = useDeleteMutation({ queryKey: ARTICLES_QUERY_KEY, mutationFn: deleteArticle });
@@ -79,15 +76,12 @@ describe('Article', () => {
     const editButton = screen.getByTitle('Edit item');
     fireEvent.click(editButton);
 
-    // Update the article name
     const inputElement = screen.getByDisplayValue(mockArticle.name);
     fireEvent.change(inputElement, { target: { value: 'Updated Item' } });
 
-    // Click the submit edit button
     const submitButton = screen.getByTitle('Submit Edit');
     fireEvent.click(submitButton);
 
-    // Check if the editMutation.mutate function was called with the correct parameters
     await waitFor(() => {
       const editArticle = vi.fn();
       const mockedEditMutation = useEditMutation({ queryKey: ARTICLES_QUERY_KEY, mutationFn: editArticle });

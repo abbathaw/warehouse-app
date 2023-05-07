@@ -53,7 +53,7 @@ describe('Sale', () => {
 
     mockUseNavigate.mockReturnValue(mockNavigate);
     mockUseDeleteMutation.mockReturnValue({ deleteMutation });
-    mockUseUpdateInventoryMutation.mockReturnValue({ updateInventory }); // Update this line
+    mockUseUpdateInventoryMutation.mockReturnValue({ updateInventory });
     mockCalculateInventoryUpdates.mockReturnValue([{ id: 1, amountToSubtract: 1 }]);
 
     render(

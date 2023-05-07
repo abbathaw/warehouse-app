@@ -10,7 +10,6 @@ Built with Vitejs, React, react-router, and Tanstack Query. Styling is done with
 
 https://warehouse-store.netlify.app/
 
-
 ## Run locally
 
 - Clone the Repository
