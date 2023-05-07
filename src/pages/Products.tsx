@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const Products = () => {
   const navigate = useNavigate();
 
-  const { isLoading, error, data } = useQuery<IProduct[]>({
+  const { isLoading, error, data, isFetching } = useQuery<IProduct[]>({
     queryKey: [PRODUCTS_QUERY_KEY],
     queryFn: async () => {
       const axiosResponse = await getProducts();
@@ -17,7 +17,7 @@ const Products = () => {
     },
   });
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loading />;
   }
 

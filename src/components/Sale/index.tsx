@@ -21,7 +21,11 @@ interface ISaleComponent {
 
 const Sale = ({ sale }: ISaleComponent) => {
   const navigate = useNavigate();
-  const { data: productData } = useGetQuery({ id: sale.productId, queryKey: PRODUCTS_QUERY_KEY, queryFn: getProduct });
+  const {
+    data: productData,
+    isError: productError,
+    isLoading: productLoading,
+  } = useGetQuery({ id: sale.productId, queryKey: PRODUCTS_QUERY_KEY, queryFn: getProduct });
 
   const { data: articlesList } = useQuery<IArticle[]>({
     queryKey: [ARTICLES_QUERY_KEY],
@@ -81,7 +85,9 @@ const Sale = ({ sale }: ISaleComponent) => {
       </div>
       <div>
         <div className="container">
-          <div> {productData?.name}</div>
+          <div>
+            {productLoading ? `Loading product name` : productError ? `Failed to load product name` : productData?.name}
+          </div>
           <div className="label">
             <span>Amount sold: {sale.amountSold} </span>{' '}
           </div>

@@ -8,7 +8,7 @@ import CreateArticle from '../components/Article/CreateArticle.tsx';
 
 const Inventory = () => {
   const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery<IArticle[]>({
+  const { isLoading, error, data, isFetching } = useQuery<IArticle[]>({
     queryKey: [ARTICLES_QUERY_KEY],
     queryFn: async () => {
       const axiosResponse = await getArticles();
@@ -21,7 +21,7 @@ const Inventory = () => {
     },
   });
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loading />;
   }
 

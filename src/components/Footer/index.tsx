@@ -7,7 +7,7 @@ import usePath from '../../hooks/usePath.tsx';
 const Footer = () => {
   const currentPage = usePath();
   return (
-    <footer className="footer">
+    <footer className="footer" data-testid="footer">
       {getNavLinks().map((navLink) => (
         <Link key={navLink.link} to={navLink.link} className={navLink.link === currentPage ? 'selected' : ''}>
           <FontAwesomeIcon icon={navLink.icon} title={navLink.label} />

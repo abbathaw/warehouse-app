@@ -11,7 +11,7 @@
     "test": "vitest",
     "prettier": "prettier --write .",
     "coverage": "vitest run --coverage",
-    "test-ci": "vitest --maxWorkers=1 --watchAll=false",
+    "test-ci": "vitest run",
     "prepare": "husky install"
   },
   "dependencies": {

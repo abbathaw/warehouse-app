@@ -8,7 +8,7 @@ import usePath from '../../hooks/usePath.tsx';
 const Sidebar = () => {
   const currentPage = usePath();
   return (
-    <aside className="sidebar">
+    <aside className="sidebar" data-testid="sidebar">
       <div className="logo-container">
         <Link to={'/'}>
           <div className="logo">

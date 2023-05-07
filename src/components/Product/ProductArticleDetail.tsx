@@ -31,7 +31,7 @@ const ProductArticleDetail = ({ articleId, amount }: IProductArticleDetail) => {
   }
 
   return (
-    <div className="container">
+    <div className="container" data-testid="product-article-detail">
       <div>{data?.name}</div>
       <div className="label">
         <span>Quantity: {amount} </span>{' '}
