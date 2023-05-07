@@ -1,4 +1,4 @@
-import * as ReactModal from 'react-modal';
+import Modal from 'react-modal';
 import React from 'react';
 
 const customStyles = {
@@ -13,7 +13,7 @@ const customStyles = {
   },
 };
 
-ReactModal.setAppElement('#root');
+if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root');
 
 interface IModal {
   isModalOpen: boolean;
@@ -21,17 +21,17 @@ interface IModal {
   children: React.ReactNode;
   title: string;
 }
-const Modal = ({ isModalOpen, setIsModalOpen, children, title }: IModal) => {
+const ModalContainer = ({ isModalOpen, setIsModalOpen, children, title }: IModal) => {
   function closeModal() {
     setIsModalOpen(false);
   }
 
   return (
-    <ReactModal isOpen={isModalOpen} onRequestClose={closeModal} style={customStyles} contentLabel={title}>
+    <Modal isOpen={isModalOpen} onRequestClose={closeModal} style={customStyles} contentLabel={title}>
       <h2>{title}</h2>
       {children}
-    </ReactModal>
+    </Modal>
   );
 };
 
-export default Modal;
+export default ModalContainer;

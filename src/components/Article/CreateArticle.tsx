@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Modal from '../Modal';
+import ModalContainer from '../Modal';
 import NewArticleForm from './NewArticleForm.tsx';
 import useCreateMutation from '../../hooks/useCreateMutation.tsx';
 import { ARTICLES_QUERY_KEY, createArticle } from '../../api/articles';
@@ -34,14 +34,14 @@ const CreateArticle = () => {
         </button>
       </div>
 
-      <Modal isModalOpen={showAddModal} setIsModalOpen={setShowAddModal} title={'Add new inventory item'}>
+      <ModalContainer isModalOpen={showAddModal} setIsModalOpen={setShowAddModal} title={'Add new inventory item'}>
         <NewArticleForm
           handleSubmit={handleSubmit}
           handleCancel={() => setShowAddModal(false)}
           isSubmitting={createMutation.isLoading}
           errorMsg={apiError}
         />
-      </Modal>
+      </ModalContainer>
     </>
   );
 };

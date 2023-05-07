@@ -25,7 +25,8 @@ const NewArticleForm = ({ handleSubmit, handleCancel, isSubmitting, errorMsg }: 
     setError('');
   };
 
-  const submitData = () => {
+  const submitData = (event: React.FormEvent) => {
+    event.preventDefault();
     if (!name) {
       setError('Please add a name');
     }
@@ -34,7 +35,7 @@ const NewArticleForm = ({ handleSubmit, handleCancel, isSubmitting, errorMsg }: 
     }
   };
   return (
-    <form className="form">
+    <form className="form" onSubmit={submitData}>
       <div className="form-row">
         <div>
           <label className="label" htmlFor="inventoryNameInput">
@@ -58,7 +59,7 @@ const NewArticleForm = ({ handleSubmit, handleCancel, isSubmitting, errorMsg }: 
         {(error || errorMsg) && <div className="error-message">{error ? error : errorMsg}</div>}
       </div>
       <div className="button-group">
-        <button className={'button primary'} disabled={isSubmitting || error !== ''} onClick={submitData} type="button">
+        <button className={'button primary'} disabled={isSubmitting || error !== ''} type="submit">
           {isSubmitting ? (
             <FontAwesomeIcon className={`action-icon ${isSubmitting && 'spinner'}`} icon={faSpinner} title="Add" />
           ) : (
