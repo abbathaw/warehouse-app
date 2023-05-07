@@ -33,7 +33,7 @@ const Products = () => {
     <div>
       <div className="button-group">
         <button className={'button primary'} onClick={handleNewProduct}>
-          Add new Product
+          Add new product
         </button>
       </div>
       <div className="table-row table-header">

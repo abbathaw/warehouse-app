@@ -5,6 +5,7 @@ import { ARTICLES_QUERY_KEY, getArticles } from '../../api/articles';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 
 interface ICreateEditForm {
   product?: IProduct | undefined;
@@ -124,9 +125,12 @@ const CreateEditForm = ({ product, handleSubmit, apiError, isSubmitting }: ICrea
                 ))}
               </select>
             </div>
-            <span onClick={() => handleDeleteArticle(index)}>
-              <span>X</span>
-            </span>
+            <FontAwesomeIcon
+              className="action-icon"
+              icon={faTimesCircle}
+              onClick={() => handleDeleteArticle(index)}
+              title="Cancel Edit"
+            />
           </div>
           <div className="form-row">
             <label className="label" htmlFor={`amountRequired-${index}`}>

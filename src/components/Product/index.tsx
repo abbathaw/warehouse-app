@@ -13,7 +13,6 @@ interface IProductComponent {
 }
 const Product = ({ product }: IProductComponent) => {
   const navigate = useNavigate();
-
   const { deleteMutation } = useDeleteMutation({
     queryKey: PRODUCTS_QUERY_KEY,
     mutationFn: deleteProduct,
@@ -31,7 +30,7 @@ const Product = ({ product }: IProductComponent) => {
   const handleDelete = () => {
     deleteMutation.mutate(product);
   };
-  const isDeleting = false;
+  const isDeleting = deleteMutation.isLoading;
   return (
     <div className="table-row">
       <div className="row-name-icon">
@@ -42,8 +41,8 @@ const Product = ({ product }: IProductComponent) => {
         <div>{product.name}</div>
       </div>
       <div>
-        {product.articles.map((article) => (
-          <ProductArticleDetail key={article.id} amount={article.amountRequired} articleId={article.id} />
+        {product.articles.map((article, index) => (
+          <ProductArticleDetail key={`${article.id}-${index}`} amount={article.amountRequired} articleId={article.id} />
         ))}
       </div>
       <div className="action-icons">
@@ -56,7 +55,6 @@ const Product = ({ product }: IProductComponent) => {
           title="Delete item"
         />
       </div>
-      <div className="extra-info-row"></div>
     </div>
   );
 };

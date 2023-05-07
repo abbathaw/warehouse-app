@@ -2,18 +2,16 @@ import { useState } from 'react';
 import ViewArticle from './ViewArticle.tsx';
 import EditArticleForm from './EditArticleForm.tsx';
 import { IArticle } from '../../types';
-import { ARTICLES_QUERY_KEY, deleteArticle, editArticle, getArticle } from '../../api/articles';
+import { ARTICLES_QUERY_KEY, deleteArticle, editArticle } from '../../api/articles';
 import useEditMutation from '../../hooks/useEditMutation.tsx';
 import { toast } from 'react-toastify';
 import useDeleteMutation from '../../hooks/useDeleteMutation.tsx';
-import useGetQuery from '../../hooks/useGetQuery.tsx';
 
 interface IArticleComponent {
   article: IArticle;
 }
 
 const Article = ({ article }: IArticleComponent) => {
-  useGetQuery({ id: article.id, queryKey: ARTICLES_QUERY_KEY, queryFn: getArticle });
   const [isEditMode, setIsEditMode] = useState(false);
 
   const { editMutation, apiError } = useEditMutation({

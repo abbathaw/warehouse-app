@@ -1,12 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../layout';
 import ErrorPage from '../components/ErrorPage.tsx';
-import Loading from '../components/Loading.tsx';
 import Home from '../pages/Home.tsx';
 import Inventory from '../pages/Inventory.tsx';
 import Products from '../pages/Products.tsx';
 import CreateProduct from '../components/Product/CreateProduct.tsx';
 import EditProduct from '../components/Product/EditProduct.tsx';
+import Sales from '../pages/Sales.tsx';
+import CreateSale from '../components/Sale/CreateSale.tsx';
+import EditSale from '../components/Sale/EditSale.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -36,13 +38,15 @@ export const router = createBrowserRouter([
       },
       {
         path: '/sales',
-        element: <Loading />,
-        children: [
-          {
-            path: '/sales/:id',
-            element: <Loading />,
-          },
-        ],
+        element: <Sales />,
+      },
+      {
+        path: '/sales/new',
+        element: <CreateSale />,
+      },
+      {
+        path: '/sales/edit/:id',
+        element: <EditSale />,
       },
     ],
   },
