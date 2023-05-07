@@ -52,7 +52,11 @@ const CreateEditForm = ({ product, handleSubmit, apiError, isSubmitting }: ICrea
     type: 'id' | 'amountRequired',
   ) => {
     const newArticleInputs = [...articleInputs];
-    const updatedValue = type === 'id' ? event.target.value : parseInt(event.target.value);
+    let updatedValue: string | number = event.target.value;
+    if (type === 'amountRequired') {
+      const numericValue = parseInt(event.target.value);
+      updatedValue = !isNaN(numericValue) ? numericValue : 1;
+    }
 
     newArticleInputs[index] = {
       ...newArticleInputs[index],
