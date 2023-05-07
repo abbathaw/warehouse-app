@@ -31,9 +31,7 @@ const useDeleteMutation = <T extends HasId>({
         }
         return undefined;
       });
-      queryClient.invalidateQueries([queryKey, context.id], {
-        exact: true,
-      });
+      queryClient.removeQueries([queryKey, context.id]);
 
       if (onSuccessCallback) {
         onSuccessCallback();
