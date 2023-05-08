@@ -6,6 +6,7 @@
 
   @media (max-width: $breakpoint-mobile) {
     display: flex;
+    background-color: var(--bg-color-darkened);
     position: sticky;
     bottom: 0;
     height: $footer-height;
